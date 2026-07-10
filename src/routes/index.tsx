@@ -1,24 +1,200 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, Truck, ShieldCheck, RefreshCw, CreditCard } from "lucide-react";
+import { ProductCard } from "@/components/site/ProductCard";
+import { products } from "@/data/products";
+import hero from "@/assets/hero.jpg";
+import catWomen from "@/assets/cat-women.jpg";
+import catMen from "@/assets/cat-men.jpg";
+import catAcc from "@/assets/cat-accessories.jpg";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Home() {
+  const newIn = products.filter((p) => p.isNew).slice(0, 4);
+  const bestsellers = products.slice(0, 4);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      {/* HERO */}
+      <section className="relative">
+        <div className="grid md:grid-cols-2 min-h-[70vh]">
+          <div className="order-2 md:order-1 flex items-center px-6 md:px-16 py-16 bg-background">
+            <div className="max-w-lg">
+              <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">
+                Осень / Зима 2026
+              </div>
+              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05]">
+                Классика,
+                <br />
+                <span className="italic text-gold">переосмысленная</span>
+                <br />
+                заново
+              </h1>
+              <p className="mt-6 text-muted-foreground leading-relaxed">
+                Универмаг премиальной одежды и аксессуаров. Кураторская подборка коллекций
+                от русских и европейских домов моды с доставкой СДЭК по всей России.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  to="/catalog"
+                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 text-sm uppercase tracking-widest hover:bg-primary/90 transition-colors"
+                >
+                  Смотреть каталог <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/catalog"
+                  search={{ category: "women" }}
+                  className="inline-flex items-center gap-2 border border-foreground px-8 py-4 text-sm uppercase tracking-widest hover:bg-foreground hover:text-background transition-colors"
+                >
+                  Новая коллекция
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="order-1 md:order-2 relative min-h-[420px] md:min-h-full">
+            <img
+              src={hero}
+              alt="Осенне-зимняя коллекция 2026"
+              width={1600}
+              height={1200}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* VALUES */}
+      <section className="border-y border-border">
+        <div className="container-x grid grid-cols-2 md:grid-cols-4 gap-6 py-8 text-xs uppercase tracking-widest">
+          {[
+            { icon: Truck, t: "Доставка СДЭК", s: "По всей России" },
+            { icon: ShieldCheck, t: "Гарантия подлинности", s: "100% оригинал" },
+            { icon: RefreshCw, t: "Возврат 14 дней", s: "Без вопросов" },
+            { icon: CreditCard, t: "Онлайн-оплата", s: "Карта, СБП, рассрочка" },
+          ].map((v) => (
+            <div key={v.t} className="flex items-center gap-3">
+              <v.icon className="h-5 w-5 text-gold shrink-0" />
+              <div>
+                <div>{v.t}</div>
+                <div className="text-muted-foreground normal-case tracking-normal text-[11px] mt-0.5">
+                  {v.s}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CATEGORIES */}
+      <section className="container-x py-20">
+        <div className="flex items-end justify-between mb-10">
+          <div>
+            <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
+              Категории
+            </div>
+            <h2 className="font-display text-3xl md:text-5xl">Выберите направление</h2>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-3 gap-4">
+          {[
+            { slug: "women", label: "Женщинам", img: catWomen },
+            { slug: "men", label: "Мужчинам", img: catMen },
+            { slug: "accessories", label: "Аксессуары", img: catAcc },
+          ].map((c) => (
+            <Link
+              key={c.slug}
+              to="/catalog"
+              search={{ category: c.slug }}
+              className="group relative block aspect-[3/4] overflow-hidden bg-muted"
+            >
+              <img
+                src={c.img}
+                alt={c.label}
+                loading="lazy"
+                width={900}
+                height={1200}
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-primary-foreground">
+                <span className="font-display text-2xl">{c.label}</span>
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* NEW IN */}
+      <section className="container-x py-20 border-t border-border">
+        <div className="flex items-end justify-between mb-10">
+          <div>
+            <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
+              Новое поступление
+            </div>
+            <h2 className="font-display text-3xl md:text-5xl">Что мы отобрали для вас</h2>
+          </div>
+          <Link to="/catalog" className="hidden md:inline-flex items-center gap-2 text-sm uppercase tracking-widest hover:text-gold">
+            Весь каталог <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+          {newIn.map((p) => <ProductCard key={p.id} product={p} />)}
+        </div>
+      </section>
+
+      {/* EDITORIAL */}
+      <section className="bg-secondary/50">
+        <div className="container-x py-20 grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">
+              Философия
+            </div>
+            <h2 className="font-display text-3xl md:text-5xl leading-tight">
+              Меньше вещей.<br />
+              <span className="italic text-gold">Больше смысла.</span>
+            </h2>
+            <p className="mt-6 text-muted-foreground leading-relaxed max-w-lg">
+              Мы верим в осознанный гардероб — вещи, которые служат годами, а не сезонами.
+              Каждая позиция в универмаге отобрана вручную: натуральные ткани, честный крой,
+              выверенные пропорции.
+            </p>
+            <Link
+              to="/catalog"
+              className="inline-flex items-center gap-2 mt-8 text-sm uppercase tracking-widest border-b border-foreground pb-1 hover:text-gold hover:border-gold"
+            >
+              Узнать больше
+            </Link>
+          </div>
+          <div className="aspect-[4/5] overflow-hidden">
+            <img
+              src={catWomen}
+              alt=""
+              loading="lazy"
+              width={900}
+              height={1200}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* BESTSELLERS */}
+      <section className="container-x py-20">
+        <div className="flex items-end justify-between mb-10">
+          <div>
+            <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
+              Хиты продаж
+            </div>
+            <h2 className="font-display text-3xl md:text-5xl">Выбор редакции</h2>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+          {bestsellers.map((p) => <ProductCard key={p.id} product={p} />)}
+        </div>
+      </section>
+    </>
   );
 }
