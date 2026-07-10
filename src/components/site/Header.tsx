@@ -19,7 +19,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-background/85 backdrop-blur border-b border-border">
       <div className="container-x flex items-center justify-between h-14 text-xs tracking-widest uppercase text-muted-foreground">
-        <span>Бесплатная доставка СДЭК от 15 000 ₽</span>
+        <span className="top-banner-text">Бесплатная доставка СДЭК от 15 000 ₽</span>
         <div className="hidden md:flex gap-6">
           <a href="#" className="nav-link-animated">Помощь</a>
           <a href="#" className="nav-link-animated">Магазины</a>

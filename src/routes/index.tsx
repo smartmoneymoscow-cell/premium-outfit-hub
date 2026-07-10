@@ -21,15 +21,15 @@ function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden hero-section">
         <div className="grid md:grid-cols-2 min-h-[70vh]">
-          <div className="order-2 md:order-1 flex items-center px-6 md:px-16 py-16 bg-background">
+          <div className="order-2 md:order-1 flex items-center px-4 md:px-16 py-12 md:py-16 bg-background hero-text">
             <div className="max-w-lg">
               <div className="animate-hero-title text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">
                 Осень / Зима 2026
               </div>
               <div className="animate-hero-line h-px bg-gold mb-8 w-12" />
-              <h1 className="animate-hero-subtitle font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05]">
+              <h1 className="animate-hero-subtitle font-display text-4xl md:text-6xl lg:text-7xl leading-[1.15] md:leading-[1.05]">
                 Классика,
                 <br />
                 <span className="italic text-gold">переосмысленная</span>
@@ -143,7 +143,7 @@ function Home() {
             </Link>
           </div>
         </Reveal>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 product-grid-responsive">
           {newIn.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
         </div>
       </section>
@@ -200,7 +200,7 @@ function Home() {
             </div>
           </div>
         </Reveal>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 product-grid-responsive">
           {bestsellers.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
         </div>
       </section>
