@@ -16,8 +16,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -26,25 +29,25 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: bun install
 
-      - name: Build
+      - name: Build for GitHub Pages
         run: bun run build
         env:
           NITRO_PRESET: github_pages
+
+      - name: Find output directory
+        run: |
+          echo "=== Looking for build output ==="
+          ls -la .output/ 2>/dev/null || echo "No .output"
+          ls -la dist/ 2>/dev/null || echo "No dist"
+          find . -name "index.html" -not -path "*/node_modules/*" | head -10
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./.output/public
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
