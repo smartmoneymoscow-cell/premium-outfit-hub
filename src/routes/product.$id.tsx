@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { products, formatPrice } from "@/data/products";
 import { useCart } from "@/lib/cart-context";
 import { ProductCard } from "@/components/site/ProductCard";
+import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/product/$id")({
   loader: ({ params }) => {
@@ -54,7 +55,7 @@ function ProductPage() {
   };
 
   return (
-    <div className="container-x py-8">
+    <div className="container-x py-8 animate-page-enter">
       {/* Breadcrumbs */}
       <nav className="text-xs uppercase tracking-widest text-muted-foreground mb-6 flex items-center gap-2 flex-wrap">
         <Link to="/" className="hover:text-foreground">Главная</Link>
@@ -74,12 +75,12 @@ function ProductPage() {
             alt={product.name}
             width={800}
             height={1000}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover hover:scale-105 transition-transform duration-700"
           />
         </div>
 
         {/* INFO */}
-        <div>
+        <div className="animate-hero-subtitle">
           <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
             {product.brand}
           </div>
@@ -138,7 +139,7 @@ function ProductPage() {
           <div className="mt-8 flex gap-3">
             <button
               onClick={onAdd}
-              className="flex-1 bg-primary text-primary-foreground py-4 text-sm uppercase tracking-widest hover:bg-primary/90 transition-colors"
+              className="btn-shine flex-1 bg-primary text-primary-foreground py-4 text-sm uppercase tracking-widest hover:bg-primary/90 transition-colors"
             >
               Добавить в корзину
             </button>
@@ -186,7 +187,7 @@ function ProductPage() {
         <section className="mt-24">
           <h2 className="font-display text-3xl mb-8">Вам может понравиться</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-            {related.map((p) => <ProductCard key={p.id} product={p} />)}
+            {related.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
           </div>
         </section>
       )}

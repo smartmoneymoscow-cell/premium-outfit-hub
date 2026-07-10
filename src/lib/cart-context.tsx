@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import type { Product } from "@/data/products";
 
 export type CartItem = {
@@ -15,6 +15,7 @@ type CartCtx = {
   clear: () => void;
   count: number;
   total: number;
+  lastAddedAt: number;
 };
 
 const Ctx = createContext<CartCtx | null>(null);
@@ -23,6 +24,7 @@ const KEY = "youdo-cart-v1";
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
+  const [lastAddedAt, setLastAddedAt] = useState(0);
 
   useEffect(() => {
     try {
@@ -46,6 +48,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...prev, { product, size, qty }];
     });
+    setLastAddedAt(Date.now());
   };
 
   const remove: CartCtx["remove"] = (id, size) =>
@@ -64,7 +67,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const total = items.reduce((s, i) => s + i.product.price * i.qty, 0);
 
   return (
-    <Ctx.Provider value={{ items, add, remove, setQty, clear, count, total }}>
+    <Ctx.Provider value={{ items, add, remove, setQty, clear, count, total, lastAddedAt }}>
       {children}
     </Ctx.Provider>
   );

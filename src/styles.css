@@ -86,3 +86,184 @@
     padding-inline: 4rem;
   }
 }
+
+/* ═══════════════════════════════════════
+   PREMIUM ANIMATIONS
+   ═══════════════════════════════════════ */
+
+/* Hero text reveal */
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-fade-up-delayed {
+  0%, 30% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-line-reveal {
+  from {
+    width: 0;
+  }
+  to {
+    width: 3rem;
+  }
+}
+
+.animate-hero-title {
+  animation: hero-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-hero-subtitle {
+  animation: hero-fade-up-delayed 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-hero-line {
+  animation: hero-line-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+}
+
+/* Cart badge bounce */
+@keyframes cart-bounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.4); }
+  50% { transform: scale(0.9); }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.animate-cart-bounce {
+  animation: cart-bounce 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Shimmer / skeleton loading */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--muted) 25%,
+    var(--background) 50%,
+    var(--muted) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Image parallax on scroll */
+.parallax-img {
+  transition: transform 0.1s linear;
+  will-change: transform;
+}
+
+/* Product card hover overlay */
+@keyframes overlay-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.group:hover .group-hover\:animate-overlay {
+  animation: overlay-fade-in 0.3s ease both;
+}
+
+/* Stagger children animation */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: hero-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 80ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 160ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 320ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 480ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 560ms; }
+
+/* Page transition */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: page-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Button hover shine effect */
+@keyframes btn-shine {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: none;
+}
+
+.btn-shine:hover::after {
+  animation: btn-shine 0.6s ease;
+}
+
+/* Smooth image zoom on product cards */
+.product-img-zoom {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .product-img-zoom {
+  transform: scale(1.06);
+}
+
+/* Header nav link underline animation */
+.nav-link-animated {
+  position: relative;
+}
+
+.nav-link-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-link-animated:hover::after {
+  width: 100%;
+}

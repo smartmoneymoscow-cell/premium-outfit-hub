@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { ProductCard } from "@/components/site/ProductCard";
+import { Reveal } from "@/components/site/Reveal";
 import { products, categories, formatPrice } from "@/data/products";
 import { z } from "zod";
 
@@ -64,16 +65,18 @@ function Catalog() {
     set(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
 
   return (
-    <div className="container-x py-10">
-      <div className="mb-8">
-        <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
-          Каталог
+    <div className="container-x py-10 animate-page-enter">
+      <Reveal>
+        <div className="mb-8">
+          <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
+            Каталог
+          </div>
+          <h1 className="font-display text-4xl md:text-5xl">{catLabel}</h1>
+          <div className="mt-2 text-sm text-muted-foreground">
+            {filtered.length} {plural(filtered.length, ["товар", "товара", "товаров"])}
+          </div>
         </div>
-        <h1 className="font-display text-4xl md:text-5xl">{catLabel}</h1>
-        <div className="mt-2 text-sm text-muted-foreground">
-          {filtered.length} {plural(filtered.length, ["товар", "товара", "товаров"])}
-        </div>
-      </div>
+      </Reveal>
 
       {/* SEARCH + SORT */}
       <div className="flex flex-col md:flex-row gap-3 mb-8">
@@ -184,8 +187,8 @@ function Catalog() {
             </div>
           ) : (
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
-              {filtered.map((p) => (
-                <ProductCard key={p.id} product={p} />
+              {filtered.map((p, i) => (
+                <ProductCard key={p.id} product={p} index={i} />
               ))}
             </div>
           )}

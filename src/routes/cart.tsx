@@ -21,8 +21,8 @@ function Cart() {
 
   if (items.length === 0) {
     return (
-      <div className="container-x py-24 text-center max-w-md mx-auto">
-        <ShoppingBag className="h-14 w-14 mx-auto text-muted-foreground" strokeWidth={1} />
+      <div className="container-x py-24 text-center max-w-md mx-auto animate-page-enter">
+        <ShoppingBag className="h-14 w-14 mx-auto text-muted-foreground animate-hero-subtitle" strokeWidth={1} />
         <h1 className="font-display text-4xl mt-6">Корзина пуста</h1>
         <p className="text-muted-foreground mt-3">
           Загляните в каталог — там немало вещей, которые захочется взять с собой.
@@ -38,7 +38,7 @@ function Cart() {
   }
 
   return (
-    <div className="container-x py-12">
+    <div className="container-x py-12 animate-page-enter">
       <div className="mb-10">
         <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
           Оформление
