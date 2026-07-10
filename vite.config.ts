@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+  base: "/premium-outfit-hub/",
   plugins: [viteReact(), tailwindcss(), tsConfigPaths()],
   build: {
     outDir: "dist",
