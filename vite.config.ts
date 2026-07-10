@@ -1,16 +1,11 @@
-import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { defineConfig } from "vite";
-import { nitro } from "nitro/vite";
 import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  plugins: [
-    tanstackStart({ server: { entry: "server" } }),
-    nitro({ preset: process.env.NITRO_PRESET }),
-    viteReact(),
-    tailwindcss(),
-    tsConfigPaths(),
-  ],
+  plugins: [viteReact(), tailwindcss(), tsConfigPaths()],
+  build: {
+    outDir: "dist",
+  },
 });
