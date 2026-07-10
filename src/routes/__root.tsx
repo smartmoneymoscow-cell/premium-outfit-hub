@@ -7,10 +7,9 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "@/lib/cart-context";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -41,9 +40,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -94,8 +90,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Заказ с YouDo — Универмаг премиальной одежды" },
       { name: "twitter:description", content: "Премиальная одежда, обувь и аксессуары с доставкой СДЭК по всей России. Тщательный отбор коллекций, безопасная онлайн-оплата." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/39de0524-bd50-4655-a8de-f490d888c67c/id-preview-ea0df0ff--a3fa5943-1f48-4450-9782-7a7923f51e43.lovable.app-1783670300054.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/39de0524-bd50-4655-a8de-f490d888c67c/id-preview-ea0df0ff--a3fa5943-1f48-4450-9782-7a7923f51e43.lovable.app-1783670300054.png" },
+
     ],
     links: [
       { rel: "stylesheet", href: appCss },
