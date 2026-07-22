@@ -7,6 +7,15 @@ import sneakers from "@/assets/product-sneakers.jpg";
 import bag from "@/assets/product-bag.jpg";
 import jeans from "@/assets/product-jeans.jpg";
 
+export type SizeChartEntry = {
+  size: string;
+  minHeight: number; // см
+  maxHeight: number; // см
+  chest?: number;   // обхват груди, см
+  waist?: number;   // обхват талии, см
+  hips?: number;    // обхват бёдер, см
+};
+
 export type Product = {
   id: string;
   name: string;
@@ -20,6 +29,7 @@ export type Product = {
   sizes: string[];
   description: string;
   isNew?: boolean;
+  sizeChart?: SizeChartEntry[];
 };
 
 export const products: Product[] = [

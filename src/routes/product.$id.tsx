@@ -1,11 +1,12 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { Heart, Truck, ShieldCheck, RefreshCw, ChevronRight } from "lucide-react";
+import { Heart, Truck, ShieldCheck, RefreshCw, ChevronRight, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { products, formatPrice } from "@/data/products";
 import { useCart } from "@/lib/cart-context";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Reveal } from "@/components/site/Reveal";
+import { VirtualTryOn } from "@/components/site/VirtualTryOn";
 
 export const Route = createFileRoute("/product/$id")({
   loader: ({ params }) => {
@@ -39,6 +40,7 @@ function ProductPage() {
   const { add } = useCart();
   const [size, setSize] = useState<string | null>(null);
   const [color, setColor] = useState(product.colors[0]);
+  const [tryOnOpen, setTryOnOpen] = useState(false);
 
   const related = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
 
@@ -151,6 +153,17 @@ function ProductPage() {
             </button>
           </div>
 
+          {/* Virtual Try-On */}
+          {product.category !== "accessories" && (
+            <button
+              onClick={() => setTryOnOpen(true)}
+              className="mt-4 w-full border-2 border-gold/40 bg-gold/5 text-foreground py-4 text-sm uppercase tracking-widest hover:bg-gold/10 hover:border-gold transition-colors flex items-center justify-center gap-2"
+            >
+              <Sparkles className="h-4 w-4 text-gold" />
+              Виртуальная примерочная
+            </button>
+          )}
+
           {/* Delivery */}
           <div className="mt-10 border-t border-border pt-6 space-y-4 text-sm">
             <div className="flex gap-3">
@@ -181,6 +194,13 @@ function ProductPage() {
           </div>
         </div>
       </div>
+
+      {/* Virtual Try-On Modal */}
+      <VirtualTryOn
+        product={product}
+        open={tryOnOpen}
+        onClose={() => setTryOnOpen(false)}
+      />
 
       {/* Related */}
       {related.length > 0 && (
